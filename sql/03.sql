@@ -8,5 +8,10 @@
  * This will be your subquery.
  * 
  * Next, join the film, inventory, rental, and customer tables.
- * Use a where clause to restrict results to the subquery.
+ * Use a where clause to restrict results to the subquery. 
  */
+select distinct(n3.customer_id) from (
+    (film join inventory on film.film_id=inventory.film_id)n1 join 
+    (select rental.customer_id, rental_id, inventory_id from rental join customer on rental.customer_id=customer.customer_id)n2 
+        on n1.inventory_id=n2.inventory_id)n3 right join 
+        (select title, sum(n1.amount) as profit from((payment join rental on payment.rental_id=rental.rental_id)n1 join (inventory join film on inventory.film_id=film.film_id)n2 on n1.inventory_id=n2.inventory_id)group by n2.title order by profit desc limit 5)n4 on n3.title=n4.title order by customer_id;

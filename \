@@ -7,7 +7,6 @@
  * Inner join the queries above.
  */
 
-
 select title from (select * from (select unnest(special_features)as sp1, title from film)n1 where sp1='Trailers')n2 join
 (select * from (select unnest(special_features)as sp1, title from film)n3 where sp1='Behind the Scenes')n4 using(title)
 order by title;

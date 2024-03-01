@@ -8,3 +8,10 @@
  * You might find the following stackoverflow answer useful for figuring out the syntax:
  * <https://stackoverflow.com/a/5700744>.
  */
+
+select rank_number rank, title, revenue, sum(revenue) over(order by revenue desc) "total revenue"  from( select title, sum(coalesce(amount,0.00)) revenue,  rank() over(order by sum(coalesce(amount,0)) desc) rank_number 
+from rental join inventory using(inventory_id) join payment using(rental_id) right join film using(film_id)
+group by title
+order by revenue desc, title)n1
+order by revenue desc
+;

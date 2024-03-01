@@ -7,3 +7,8 @@
  * For this problem, you should use the NOT IN clause;
  * in problem 06b you will use the LEFT JOIN clause.
  */
+
+select title from film
+where title not in (
+	select title from inventory i join film f on i.film_id=f.film_id)
+order by title;
